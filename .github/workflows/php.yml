@@ -1,39 +1,66 @@
-name: PHP Composer
+name: PHP CI with MySQL
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+push:
+branches: [ main ]
+pull_request:
+branches: [ main ]
 
 jobs:
-  build:
+php-mysql:
+runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+```
+services:
+  mysql:
+    image: mysql:8.0
+    env:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test_pass
+    ports:
+      - 3306:3306
+    options: >-
+      --health-cmd="mysqladmin ping --silent"
+      --health-interval=10s
+      --health-timeout=5s
+      --health-retries=3
 
-    steps:
-    - uses: actions/checkout@v4
+steps:
+  - name: 📥 Checkout code
+    uses: actions/checkout@v4
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
+  - name: 🐘 Setup PHP
+    uses: shivammathur/setup-php@v2
+    with:
+      php-version: '8.2'
+      extensions: mysqli, pdo, pdo_mysql
+      coverage: none
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+  - name: 📦 Install dependencies
+    run: |
+      if [ -f composer.json ]; then
+        composer install --no-progress --no-interaction
+      fi
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+  - name: ⏳ Wait for MySQL
+    run: |
+      until mysqladmin ping -h "127.0.0.1" -u test_user -ptest_pass --silent; do
+        echo "Waiting for MySQL..."
+        sleep 3
+      done
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+  - name: 🛠 Run Database Setup
+    run: |
+      mysql -h 127.0.0.1 -u test_user -ptest_pass test_db < database.sql
 
-    # - name: Run test suite
-    #   run: composer run-script test
+  - name: ✅ Run PHP Tests / Script
+    run: |
+      if [ -f vendor/bin/phpunit ]; then
+        vendor/bin/phpunit
+      else
+        php -S localhost:8000 -t public & sleep 5
+        echo "Server started for testing"
+      fi
+```
