@@ -1,0 +1,167 @@
+:root {
+    --fin-blue: #0A3D91; /* Trust & Growth */
+    --fin-orange: #FF6A00; /* Opportunity & Action */
+    --fin-white: #FFFFFF;
+    --fin-light-bg: #F8F9FA;
+    --fin-dark-text: #2C3E50;
+    --fin-light-text: #6C757D;
+    
+    --bs-primary: var(--fin-blue);
+    --bs-secondary: var(--fin-orange);
+    --bs-body-font-family: 'Inter', sans-serif;
+    --bs-heading-font-family: 'Outfit', sans-serif;
+}
+
+body {
+    font-family: var(--bs-body-font-family);
+    color: var(--fin-dark-text);
+    background-color: var(--fin-light-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--bs-heading-font-family);
+    font-weight: 700;
+}
+
+/* Media Responsive Defaults */
+img, video, audio, iframe, object, embed {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Navbar Customization */
+.navbar-custom {
+    background-color: var(--fin-white);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.navbar-custom .navbar-brand img {
+    height: 50px;
+}
+.navbar-custom .nav-link {
+    color: var(--fin-blue);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.navbar-custom .nav-link:hover, .navbar-custom .nav-link.active {
+    color: var(--fin-orange);
+}
+
+/* Primary and Secondary Buttons */
+.btn-primary-custom {
+    background-color: var(--fin-blue);
+    border-color: var(--fin-blue);
+    color: var(--fin-white);
+    padding: 10px 24px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.btn-primary-custom:hover {
+    background-color: #072a6b;
+    border-color: #072a6b;
+    color: var(--fin-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(10, 61, 145, 0.2);
+}
+
+.btn-secondary-custom {
+    background-color: var(--fin-orange);
+    border-color: var(--fin-orange);
+    color: var(--fin-white);
+    padding: 10px 24px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.btn-secondary-custom:hover {
+    background-color: #e65f00;
+    border-color: #e65f00;
+    color: var(--fin-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 106, 0, 0.2);
+}
+
+/* Footer Customization */
+.footer-custom {
+    background-color: var(--fin-blue);
+    color: var(--fin-white);
+    padding: 60px 0 30px;
+}
+.footer-custom a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.footer-custom a:hover {
+    color: var(--fin-orange);
+}
+.footer-custom .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: var(--fin-white);
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+.footer-custom .social-icon:hover {
+    background: var(--fin-orange);
+    transform: translateY(-3px);
+}
+
+/* Cards */
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+/* Utility Animations */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Bottom Navigation */
+.mobile-bottom-nav {
+    background-color: var(--fin-white);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+    z-index: 1030;
+    padding: 12px 0 10px 0;
+    border-top: 1px solid rgba(0,0,0,0.03);
+}
+.mobile-bottom-nav .nav-item {
+    color: var(--fin-blue);
+    transition: all 0.3s ease;
+    font-family: var(--bs-body-font-family);
+}
+.mobile-bottom-nav .nav-item:hover,
+.mobile-bottom-nav .nav-item:active {
+    color: var(--fin-orange);
+    transform: translateY(-2px);
+}
+.mobile-bottom-nav .nav-item i {
+    margin-bottom: 3px;
+}
+
+/* Prevent content overlapping behind mobile nav */
+@media (max-width: 991.98px) {
+    body {
+        padding-bottom: 75px;
+    }
+}
